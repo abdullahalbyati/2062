@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.25.0/sweetalert2.css">
+
+    <title><%=title%></title>
+  </head>
+  <body>
+
+    <div class="container">
+      <br>
+      <strong>
+        <h3 class="text-center">
+          Pdf Generator
+        </h3>
+      </strong>
+      <br>
+    <div class="card card-body">
+      <form action="" method="post" id="form">
+          
+          <div class="row">
+            <div class="col-md-6">
+                <label for="namep">Enter names</label>
+                <textarea name="namep" id="namep" class="form-control" rows="5" cols="5" placeholder="Enter names" required></textarea>
+            </div>
+            <div class="col-md-6">
+               <label for="number">Enter Serial Numbers</label>
+                <textarea name="number" id="number" class="form-control" rows="5" placeholder="Enter Serial Numbers" cols="5" required></textarea>
+            </div>
+          </div>
+          <br>
+          <button type="submit" id="submit" class="btn btn-success btn-block btn-sm">Process Entered Data and Generate Pdf</button>
+        </div>
+
+      </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.25.0/sweetalert2.all.js"></script>
+    
+
+<script>
+  $(function(){
+
+    $("#form").on('submit',function(e){
+      e.preventDefault()
+      $("#submit").removeClass('btn-success')
+      $("#submit").addClass('btn-info disabled')
+      $("#submit").html(` <i class="fas fa-spinner fa-spin"></i> Processing your data , please wait ... `)
+      
+      $.ajax({
+        url : '/',
+        method : "POST",
+        data : $('#form').serialize(),
+        success : function(data){
+
+           $("#submit").removeClass('btn-info disabled')
+          $("#submit").addClass('btn-success')
+          $("#submit").html(` Process Entered Data and Generate Pdf  `)
+          swal({
+            type : data.type,
+            title : data.type.toUpperCase(),
+            html : data.msg
+          })
+
+          if(data.type== "success"){
+             $('#form')[0].reset()
+          }
+        }
+      })
+
+
+
+    })
+
+  })
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>
